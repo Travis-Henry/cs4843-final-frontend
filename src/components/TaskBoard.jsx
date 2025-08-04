@@ -1,12 +1,13 @@
 import React from 'react'
 import AddTaskForm from './AddTaskForm'
-import Task from './task'
+import Task from './Task'
 
 function TaskBoard({
   tasks, 
   selectedTaskId, 
   setSelectedTaskId, 
-  isAddingTask, 
+  isAddingTask,
+  setIsAddingTask, 
   onAddTask, 
   onEditTask, 
   onDeleteTask, 

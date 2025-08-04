@@ -51,6 +51,7 @@ function App() {
         selectedTaskId={selectedTaskId}
         setSelectedTaskId={setSelectedTaskId}
         isAddingTask={isAddingTask}
+        setIsAddingTask={setIsAddingTask}
         onAddTask={addTask}
         onEditTask={editTask}
         onDeleteTask={deleteTask}
