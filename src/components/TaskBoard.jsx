@@ -19,10 +19,10 @@ function TaskBoard({
     <div className='task-board'>
        {tasks.map(task => (
         <Task
-          key={task.id}
+          key={task._id}
           task={task}
-          isSelected={selectedTaskId === task.id}
-          onSelect={() => setSelectedTaskId(task.id)}
+          isSelected={selectedTaskId === task._id}
+          onSelect={() => setSelectedTaskId(task._id)}
           onDeselect={() => setSelectedTaskId(null)}
           onEdit={onEditTask}
           onDelete={onDeleteTask}

@@ -11,7 +11,7 @@ function Task({
 }){
 
     const [isEditing, setIsEditing] = useState(false);
-    const [editText, setEditText] = useState(task.text);
+    const [editText, setEditText] = useState(task.title);
 
     const handleClick = () => {
         if(isSelected){
@@ -23,20 +23,20 @@ function Task({
 
     const handleEdit = () => {
         setIsEditing(true);
-        setEditText(task.text);
+        setEditText(task.title);
     };
 
     const handleSaveEdit = () => {
         //if text is different, save
-        if(editText.trim() && editText.trim() !== task.text){
-            onEdit(task.id, editText.trim());
+        if(editText.trim() && editText.trim() !== task.title){
+            onEdit(task._id, editText.trim());
         }
         setIsEditing(false);
         onDeselect();
     };
 
     const handleCancelEdit = () => {
-        setEditText(task.text);
+        setEditText(task.title);
         setIsEditing(false);
     };
 
@@ -51,7 +51,7 @@ function Task({
 
     const handleDelete = () => {
         if(window.confirm('Are you sure you want to delete this task?')){
-            onDelete(task.id);
+            onDelete(task._id);
         }
     };
 
@@ -118,7 +118,7 @@ function Task({
       </div>
       
       <span className="task-text">
-        {task.text}
+        {task.title}
       </span>
 
       {isSelected && (
