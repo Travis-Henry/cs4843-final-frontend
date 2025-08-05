@@ -67,10 +67,20 @@
 }
 
 .task-checkbox {
-  width: 18px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   accent-color: #646cff;
+  transform: scale(1);
+  transition: transform 0.15s ease;
+}
+
+.task-checkbox:hover {
+  transform: scale(1.1);
+}
+
+.task-checkbox:active {
+  transform: scale(0.95);
 }
 
 /* Task text */

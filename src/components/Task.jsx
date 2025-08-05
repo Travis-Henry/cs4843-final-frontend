@@ -55,8 +55,9 @@ function Task({
         }
     };
 
-    const handleToggleComplete = () => {
-        //TODO
+    const handleToggleComplete = (e) => {
+        e.stopPropagation(); //prevent click from selecting the task
+        onToggleComplete(task._id, !task.completed);
     }
 
     const handleButtonClick = (e, action) => {
