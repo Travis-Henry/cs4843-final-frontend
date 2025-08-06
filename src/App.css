@@ -20,7 +20,7 @@
   min-height: 100px;
 }
 
-/* Task styling */
+/* task styling */
 .Task {
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@
   cursor: default;
 }
 
-/* Task checkbox */
+/* task checkbox */
 .task-checkbox-container {
   flex-shrink: 0;
 }
@@ -83,7 +83,7 @@
   transform: scale(0.95);
 }
 
-/* Task text */
+/* task text */
 .task-text {
   flex: 1;
   font-size: 1rem;
@@ -91,7 +91,7 @@
   word-break: break-word;
 }
 
-/* Task actions (edit/delete buttons) */
+/* task action buttons */
 .task-actions {
   display: flex;
   gap: 0.5rem;
@@ -129,7 +129,7 @@
   border-color: #c82333;
 }
 
-/* Task editing mode */
+/* task editing mode */
 .task-edit-input {
   flex: 1;
   padding: 0.5rem 0.75rem;
@@ -153,7 +153,7 @@
   flex-shrink: 0;
 }
 
-/* Logout button styling */
+/* logout button style */
 .logout-btn {
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
@@ -171,7 +171,7 @@
   border-color: #c82333;
 }
 
-/* Auth form styling */
+/* auth form styles */
 .auth-container {
   display: flex;
   justify-content: center;
@@ -276,7 +276,7 @@
   cursor: not-allowed;
 }
 
-/* Add task button - outside TaskBoard */
+/*add task button - outside TaskBoard */
 .add-task-btn {
   align-self: center;
   padding: 0.8rem 2rem;

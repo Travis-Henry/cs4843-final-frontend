@@ -16,7 +16,7 @@ function TaskBoard({
 
     
   return (
-    <div className='task-board'>
+    <div className='TaskBoard'>
        {tasks.map(task => (
         <Task
           key={task._id}
