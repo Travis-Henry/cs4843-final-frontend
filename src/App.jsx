@@ -150,7 +150,7 @@ function App() {
         </>
       ):
       (
-        <AuthForm onLogin={handleLogin}/>
+        <AuthForm onLogin={handleLogin} BACKEND_URL={BACKEND_URL}/>
       )}
     </div>
   )

@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 import React from 'react'
 
-function AuthForm() {
+function AuthForm({handleLogin, BACKEND_URL}) {
 
     const [isLogin, setIsLogin] = useState(true);
     const [username, setUsername] = useState('');
@@ -10,8 +10,33 @@ function AuthForm() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = () => {
-        //TODO login/register
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        const endpoint = isLogin ? '/login' : '/register';
+
+        try{
+            const response = await fetch(`${BACKEND_URL}${endpoint}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json' },
+                body: JSON.stringify({username, password})
+            });
+            
+            const data = await response.json();
+
+            if(response.ok){
+                localStorage.setItem('token', data.token);
+                onLogin(data.user);
+            }else{
+                setError(data.error || 'Authentication failed');
+            }
+        }catch(err){
+            setError("Connection failed. Please try again.");
+        }finally{
+            setLoading(false);
+        }
     }
 
 
