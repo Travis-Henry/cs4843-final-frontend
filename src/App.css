@@ -373,6 +373,7 @@
   font-size: 1.1rem;
 }
 
+
 /* Light mode overrides */
 @media (prefers-color-scheme: light) {
   .TaskBoard {

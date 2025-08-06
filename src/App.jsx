@@ -131,7 +131,12 @@ function App() {
     <div className='app-container'> 
       {isLoggedIn ? (
         <>
+          <div className="header">
           <h1>Task Tracker</h1>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
+        </div>
           <TaskBoard 
             tasks={tasks}
             selectedTaskId={selectedTaskId}
@@ -150,7 +155,7 @@ function App() {
         </>
       ):
       (
-        <AuthForm onLogin={handleLogin} BACKEND_URL={BACKEND_URL}/>
+        <AuthForm handleLogin={handleLogin} BACKEND_URL={BACKEND_URL}/>
       )}
     </div>
   )

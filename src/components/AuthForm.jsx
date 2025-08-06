@@ -28,7 +28,7 @@ function AuthForm({handleLogin, BACKEND_URL}) {
 
             if(response.ok){
                 localStorage.setItem('token', data.token);
-                onLogin(data.user);
+                handleLogin(data);
             }else{
                 setError(data.error || 'Authentication failed');
             }
