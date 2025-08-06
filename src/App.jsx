@@ -1,6 +1,7 @@
 import './App.css'
 import TaskBoard from './components/TaskBoard'
 import AddTaskButton from './components/AddTaskButton'
+import AuthForm from './components/AuthForm'
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -12,20 +13,58 @@ function App() {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [isAddingTask, setIsAddingTask] = useState(false);
 
-  // Load tasks from backend
+  //login states
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  //check if user is logged in
   useEffect(() => {
-    fetch(`${BACKEND_URL}/tasks`)
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      loadTasks();
+    }
+  }, []);
+
+  //setup headers
+  const getHeaders = () => {
+    const token = localStorage.getItem('token');
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  }
+
+  //load tasks from database
+  const loadTasks = () => {
+    fetch(`${BACKEND_URL}/tasks`, {
+      headers: getHeaders()
+    })
       .then(res => res.json())
       .then(data => setTasks(data))
       .catch(err => console.error("Failed to load tasks:", err));
-  }, []);
+  };
 
+  //handle login
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setIsLoggedIn(true);
+    loadTasks();
+  }
+
+  //handle logout
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setUser(null);
+    setTasks([]);
+  }
 
   //add tast to database
   const addTask = (taskText) => {
     fetch(`${BACKEND_URL}/tasks`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getHeaders(),
       body: JSON.stringify({ title: taskText })
     })
       .then(res => res.json())
@@ -46,7 +85,7 @@ function App() {
   const editTask = (taskId, newText) => {
     fetch(`${BACKEND_URL}/tasks/${taskId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getHeaders(),
       body: JSON.stringify({ title: newText })
     })
       .then(() => {
@@ -57,10 +96,11 @@ function App() {
   };
 
 
-  //TODO add http request
+  //delete task from database
   const deleteTask = (taskId) => {
     fetch(`${BACKEND_URL}/tasks/${taskId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: getHeaders()
     })
       .then(() => {
         setTasks(tasks.filter(task => task._id !== taskId));
@@ -70,14 +110,14 @@ function App() {
   };
 
 
-  //TODO add http requests
+  //edit complete in database
   const toggleComplete = (taskId) => {
     const task = tasks.find(t => t._id === taskId);
     const updatedTask = { ...task, completed: !task.completed };
 
     fetch(`${BACKEND_URL}/tasks/${taskId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getHeaders(),
       body: JSON.stringify({ completed: updatedTask.completed })
     })
       .then(() => {
@@ -89,22 +129,29 @@ function App() {
 
   return (
     <div className='app-container'> 
-      <h1>Task Tracker</h1>
-      <TaskBoard 
-        tasks={tasks}
-        selectedTaskId={selectedTaskId}
-        setSelectedTaskId={setSelectedTaskId}
-        isAddingTask={isAddingTask}
-        setIsAddingTask={setIsAddingTask}
-        onAddTask={addTask}
-        onEditTask={editTask}
-        onDeleteTask={deleteTask}
-        onToggleComplete={toggleComplete}
-      />
-      <AddTaskButton 
-        isAddingTask={isAddingTask}
-        setIsAddingTask={setIsAddingTask}
-      />
+      {isLoggedIn ? (
+        <>
+          <h1>Task Tracker</h1>
+          <TaskBoard 
+            tasks={tasks}
+            selectedTaskId={selectedTaskId}
+            setSelectedTaskId={setSelectedTaskId}
+            isAddingTask={isAddingTask}
+            setIsAddingTask={setIsAddingTask}
+            onAddTask={addTask}
+            onEditTask={editTask}
+            onDeleteTask={deleteTask}
+            onToggleComplete={toggleComplete}
+          />
+          <AddTaskButton 
+            isAddingTask={isAddingTask}
+            setIsAddingTask={setIsAddingTask}
+          />
+        </>
+      ):
+      (
+        <AuthForm onLogin={handleLogin}/>
+      )}
     </div>
   )
 }
